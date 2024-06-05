@@ -1,1 +1,5 @@
-# Task-List-CPP
+# Tasklist project C++
+
+## Tech stack 
+- **C++**
+
