@@ -1,6 +1,7 @@
 #include "TaskManager.h"
 #include "Observer.h"
 #include <iostream>
+#include <limits>
 
 int main() {
 	// Tworzenie instancji TaskManagera i obserwatora
@@ -19,29 +20,48 @@ int main() {
         std::cout << "----------------------- \n";
         
         // Obs³uga wyboru u¿ytkownika
-        if (option == 1) {
-        	// Dodawanie nowego zadania
-            std::cout << "Podaj nazwe zadania: \n";
-            std::string name;
-            std::cin >> name;
-            Task* task = new Task(name);
-            taskManager->addTask(task);
+		if (option == 1) {
+		    // Dodawanie nowego zadania
+		    std::cout << "Podaj nazwe zadania: \n";
+		    std::string name;
+		    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignoruje pozosta³e znaki w buforze
+		    std::getline(std::cin, name);
+		    Task* task = new Task(name);
+		    taskManager->addTask(task);
         } else if (option == 2) {
-        	// Usuwanie zadania
-            std::cout << "Podaj indeks zadania do usuniecia: \n";
-            int index;
-            std::cin >> index;
-            taskManager->deleteTask(index);
-        } else if (option == 3) {
-        	// Edycja zadania
-            std::cout << "Podaj indeks zadania do edycji: \n";
-            int index;
-            std::cin >> index;
-            std::cout << "Podaj nowa nazwe zadania: \n";
-            std::string newName;
-            std::cin >> newName;
-            taskManager->editTask(index, newName);
-        } else if (option == 4) {
+    // Usuwanie zadania
+    std::cout << "Podaj indeks zadania do usuniecia: \n";
+    int index;
+    std::cin >> index;
+
+    // Sprawdzenie, czy wprowadzono tylko jeden indeks
+    if (std::cin.fail() || std::cin.peek() != '\n') {
+        std::cout << "Nieprawidlowy indeks. Prosze wprowadzic tylko jedna liczbe.\n\n";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        continue;
+    }
+
+    taskManager->deleteTask(index);
+	}else if (option == 3) {
+    // Edycja zadania
+    std::cout << "Podaj indeks zadania do edycji: \n";
+    int index;
+    std::cin >> index;
+
+    // Sprawdzenie, czy wprowadzono tylko jeden indeks
+    if (std::cin.fail() || std::cin.peek() != '\n') {
+        std::cout << "Nieprawidlowy indeks. Prosze wprowadzic tylko jedna liczbe.\n\n";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        continue;
+    }
+
+    std::cout << "Podaj nowa nazwe zadania: \n";
+    std::string newName;
+    std::cin >> newName;
+    taskManager->editTask(index, newName);
+	} else if (option == 4) {
         	// Wyœwietlanie zadañ
             taskManager->displayTasks();
             std::cout << "\n";
