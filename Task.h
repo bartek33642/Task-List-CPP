@@ -3,6 +3,7 @@
 
 #include <string>
 
+// Klasa Task reprezentuj¹ca pojedyncze zadanie
 class Task {
 public:
     std::string name;

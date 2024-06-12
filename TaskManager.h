@@ -5,6 +5,7 @@
 #include "Observer.h"
 #include <vector>
 
+// Klasa TaskManager zarz¹dza list¹ zadañ i obserwatorów
 class TaskManager {
 private:
     static TaskManager* instance;
